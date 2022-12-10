@@ -6,6 +6,9 @@ authors = ["Sebastian Derendarz <sebastian.derendarz@stxnext.pl>"]
 
 [tool.poetry.dependencies]
 python = "3.8"
+pandas = "^1.5.2"
+requests = "^2.28.1"
+pydantic = "^1.10.2"
 
 [tool.poetry.dev-dependencies]
 

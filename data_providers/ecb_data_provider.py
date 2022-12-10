@@ -5,5 +5,7 @@ from data_providers import data_provider
 
 
 class EcbDataProvider(data_provider.DataProvider):
-    def get_exchange_rates(self, quote_asset: str) -> List[entities.ExchangeRate]:
+    URL = "https://sdw-wsrest.ecb.europa.eu/service/data/EXR/D..EUR.SP00.A"
+
+    def get_exchange_rates(self, base_currency: str) -> List[entities.ExchangeRate]:
         pass

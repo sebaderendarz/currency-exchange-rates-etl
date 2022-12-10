@@ -6,5 +6,5 @@ import entities
 
 class DataProvider(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def get_exchange_rates(self, quote_asset: str) -> List[entities.ExchangeRate]:
+    def get_exchange_rates(self, base_currency: str) -> List[entities.ExchangeRate]:
         pass
