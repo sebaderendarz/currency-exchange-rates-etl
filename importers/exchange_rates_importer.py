@@ -58,4 +58,6 @@ class ExchangeRatesImporter:
     ) -> List[entities.ExchangeRate]:
         # TODO implement logic that checks the current status of data in data warehouse
         # and prepares data to be saved accordingly.
-        return []
+        for exchange_rate in new_exchange_rates:
+            exchange_rate.date = '2022-12-05'
+        return new_exchange_rates
