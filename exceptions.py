@@ -1,0 +1,2 @@
+class FailedToFetchExchangeRatesFromExternalSource(Exception):
+    pass

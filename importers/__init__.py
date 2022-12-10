@@ -1,9 +1,4 @@
-__all__ = [
-    "EbcExchangeRatesImporter",
-    "FreeCurrencyExchangeRatesImporter",
-]
+__all__ = ["ExchangeRatesImporter"]
 
-from importers.ebc_exchange_rates_importer import EbcExchangeRatesImporter
-from importers.free_currency_exchange_rates_importer import (
-    FreeCurrencyExchangeRatesImporter,
-)
+
+from importers.exchange_rates_importer import ExchangeRatesImporter

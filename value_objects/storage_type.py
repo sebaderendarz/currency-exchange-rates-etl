@@ -2,5 +2,5 @@ import enum
 
 
 class StorageType(enum.Enum):
-    BIG_QUERY = "BIG_QUERY"  # GCP BigQuery
-    POSTGRES = "POSTGRES"  # Postgres DB instance
+    GCP_BIG_QUERY = "GCP_BIG_QUERY"
+    POSTGRES = "POSTGRES"

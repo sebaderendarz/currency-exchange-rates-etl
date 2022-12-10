@@ -2,5 +2,5 @@ import enum
 
 
 class Source(enum.Enum):
-    EBC = "EBC"  # European Central Bank
+    ECB = "ECB"  # European Central Bank
     FC_API = "FC_API"  # Free Currency API
