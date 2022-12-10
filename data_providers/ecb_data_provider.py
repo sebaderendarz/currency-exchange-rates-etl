@@ -5,10 +5,10 @@ from typing import List
 import pandas
 import requests
 
+from data_providers import data_provider
 import entities
 import exceptions
 import value_objects
-from data_providers import data_provider
 
 
 class EcbDataProvider(data_provider.DataProvider):

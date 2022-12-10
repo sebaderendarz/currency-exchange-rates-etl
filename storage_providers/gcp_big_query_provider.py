@@ -1,8 +1,8 @@
 from typing import List
 
 import entities
-import value_objects
 from storage_providers import storage_provider
+import value_objects
 
 
 class GcpBigQueryProvider(storage_provider.StorageProvider):
