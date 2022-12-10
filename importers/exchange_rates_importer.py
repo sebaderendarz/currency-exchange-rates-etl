@@ -25,6 +25,8 @@ class ExchangeRatesImporter:
             self._storage = storage_providers.GcpBigQueryProvider()
         elif storage_type == value_objects.StorageType.POSTGRES:
             self._storage = storage_providers.PostgresProvider()
+        elif storage_type == value_objects.StorageType.SQLITE:
+            self._storage = storage_providers.SqliteProvider()
         else:
             raise NotImplementedError
 
