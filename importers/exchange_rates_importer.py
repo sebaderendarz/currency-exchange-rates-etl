@@ -12,10 +12,10 @@ class ExchangeRatesImporter:
         self,
         source: value_objects.Source,
         storage_type: value_objects.StorageType,
-        quote_asset: str,
+        base_currency: str,
     ) -> None:
         self._source = source
-        self._quote_asset = quote_asset
+        self._base_currency = base_currency
         # strategy pattern
         self._init_storage_provider(storage_type)
         self._init_data_provider()
@@ -38,10 +38,14 @@ class ExchangeRatesImporter:
 
     def run_import(self) -> None:
         try:
-            new_exchange_rates = self._data_provider.get_exchange_rates(self._quote_asset)
+            new_exchange_rates = self._data_provider.get_exchange_rates(self._base_currency)
         except exceptions.FailedToFetchExchangeRatesFromExternalSource:
+            print(
+                f"There are no new exchange rates for source {self._source.value}. "
+                "Trying to fill missing records with the latest available values from the past..."
+            )
             new_exchange_rates = []
-        latest_exchange_rates_in_db = self._storage.get_latest_exchange_rates(self._source, self._quote_asset)
+        latest_exchange_rates_in_db = self._storage.get_latest_exchange_rates(self._source, self._base_currency)
         exchange_rates_to_save = self._prepare_exchange_rates_to_save(new_exchange_rates, latest_exchange_rates_in_db)
         self._storage.insert_exchange_rates(exchange_rates_to_save)
 

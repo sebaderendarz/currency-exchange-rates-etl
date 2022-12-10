@@ -2,10 +2,13 @@
 name = "etl-for-currency-exchange-rates"
 version = "0.1.0"
 description = "Fetch currency exchange rates from specific sources and save in data warehouse"
-authors = ["Sebastian Derendarz <sebastian.derendarz@stxnext.pl>"]
+authors = ["Sebastian Derendarz <sebastian.derendarz@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "3.8"
+pandas = "^1.5.2"
+requests = "^2.28.1"
+pydantic = "^1.10.2"
 
 [tool.poetry.dev-dependencies]
 
