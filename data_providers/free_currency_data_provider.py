@@ -20,19 +20,21 @@ class FreeCurrencyDataProvider(data_provider.DataProvider):
         response = requests.get(self.URL, params=params)
         response_data = response.json()
         if response.status_code != 200:
-            print(
+            error_message = (
                 "Request to fetch data from FreeCurrencyAPI failed with status code: "
                 f"{response.status_code}. Response: {response_data}."
             )
-            raise exceptions.FailedToFetchExchangeRatesFromExternalSource
-        return self._parse_response_to_exchange_rate_entites(response_data["data"])
+            raise exceptions.FailedToFetchExchangeRatesFromExternalSource(error_message)
+        return self._parse_response_to_exchange_rate_entites(response_data["data"], base_currency)
 
-    def _parse_response_to_exchange_rate_entites(self, response_data: dict) -> List[entities.ExchangeRate]:
+    def _parse_response_to_exchange_rate_entites(
+        self, response_data: dict, base_currency: str
+    ) -> List[entities.ExchangeRate]:
         exchange_rates = []
         for currency, exchange_rate in response_data.items():
             exchange_rate = entities.ExchangeRate(
                 currency=currency,
-                base_currency="EUR",
+                base_currency=base_currency,
                 # Tested locally. API returns exchange rates with decimal precision 6 for all currencies.
                 exchange_rate=str(exchange_rate),
                 source=value_objects.Source.FC_API,

@@ -39,9 +39,9 @@ class ExchangeRatesImporter:
     def run_import(self) -> None:
         try:
             new_exchange_rates = self._data_provider.get_exchange_rates(self._base_currency)
-        except exceptions.FailedToFetchExchangeRatesFromExternalSource:
+        except exceptions.FailedToFetchExchangeRatesFromExternalSource as exc:
             print(
-                f"There are no new exchange rates for source {self._source.value}. "
+                f"{exc}\nThere are no new exchange rates for source {self._source.value}. "
                 "Trying to fill missing records with the latest available values from the past..."
             )
             new_exchange_rates = []
