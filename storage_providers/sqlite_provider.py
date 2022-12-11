@@ -31,29 +31,37 @@ class SqliteProvider(storage_provider.StorageProvider):
     ) -> List[entities.ExchangeRate]:
         latest_exchange_rates = []
         with self._conn:
-            # TODO fix query
-            data = self._conn.execute("""
-                SELECT * FROM exchange_rates
-                WHERE id IN (
-                    SELECT id FROM (
-                        SELECT DISTINCT id, currency, base_currency
-                        FROM exchange_rates
-                        WHERE base_currency = ? AND source = ?
-                        ORDER BY date DESC
-                    )
-                )
-            """, (base_currency, source.value))
-            for row in data:
-                breakpoint()
-                exchange_rate = entities.ExchangeRate(
-                    currency=row[1],
-                    base_currency=row[2],
-                    exchange_rate=row[3],
-                    source=value_objects.Source(row[4]),
-                    date=row[5],
-                )
+            newest_date_per_currency = self._conn.execute(
+                """
+                SELECT currency, base_currency, MAX(date) AS date
+                FROM exchange_rates
+                WHERE base_currency = ? AND source = ?
+                GROUP BY currency, base_currency
+            """,
+                (base_currency, source.value),
+            )
+            for row in newest_date_per_currency:
+                exchange_rate = self._get_exchange_rate(row + (source.value,))
                 latest_exchange_rates.append(exchange_rate)
         return latest_exchange_rates
+
+    def _get_exchange_rate(self, latest_exchange_rate_info: tuple) -> entities.ExchangeRate:
+        latest_exchange_rate = self._conn.execute(
+            """
+            SELECT * FROM exchange_rates
+            WHERE
+            currency = ? AND base_currency = ?
+            AND date = ? AND source = ?
+        """,
+            latest_exchange_rate_info,
+        ).fetchone()
+        return entities.ExchangeRate(
+            currency=latest_exchange_rate[1],
+            base_currency=latest_exchange_rate[2],
+            exchange_rate=latest_exchange_rate[3],
+            source=value_objects.Source(latest_exchange_rate[4]),
+            date=latest_exchange_rate[5],
+        )
 
     def insert_exchange_rates(self, exchange_rates: List[entities.ExchangeRate]) -> None:
         sql = """

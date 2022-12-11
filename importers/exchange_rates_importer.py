@@ -1,3 +1,4 @@
+import datetime
 from typing import List
 
 import data_providers
@@ -59,5 +60,5 @@ class ExchangeRatesImporter:
         # TODO implement logic that checks the current status of data in data warehouse
         # and prepares data to be saved accordingly.
         for exchange_rate in new_exchange_rates:
-            exchange_rate.date = '2022-12-05'
+            exchange_rate.date = '2022-12-08'  # int(datetime.datetime.now().timestamp()) - 40000
         return new_exchange_rates
