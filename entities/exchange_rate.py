@@ -1,4 +1,3 @@
-import datetime
 from typing import Optional
 
 import pydantic
@@ -15,4 +14,4 @@ class ExchangeRate(pydantic.BaseModel):
     # when compared to the data source.
     exchange_rate: str
     source: value_objects.Source
-    date: Optional[datetime.date] = None
+    date: Optional[str] = None  # yyyy-mm-dd

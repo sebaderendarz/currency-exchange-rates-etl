@@ -12,7 +12,7 @@ class GcpBigQueryProvider(storage_provider.StorageProvider):
     def get_latest_exchange_rates(
         self, source: value_objects.Source, base_currency: str
     ) -> List[entities.ExchangeRate]:
-        pass
+        raise NotImplementedError
 
     def insert_exchange_rates(self, exchange_rates: List[entities.ExchangeRate]) -> None:
-        pass
+        raise NotImplementedError

@@ -1,3 +1,4 @@
+import datetime
 from typing import List
 
 import data_providers
@@ -25,6 +26,8 @@ class ExchangeRatesImporter:
             self._storage = storage_providers.GcpBigQueryProvider()
         elif storage_type == value_objects.StorageType.POSTGRES:
             self._storage = storage_providers.PostgresProvider()
+        elif storage_type == value_objects.StorageType.SQLITE:
+            self._storage = storage_providers.SqliteProvider()
         else:
             raise NotImplementedError
 
@@ -56,4 +59,6 @@ class ExchangeRatesImporter:
     ) -> List[entities.ExchangeRate]:
         # TODO implement logic that checks the current status of data in data warehouse
         # and prepares data to be saved accordingly.
-        return []
+        for exchange_rate in new_exchange_rates:
+            exchange_rate.date = '2022-12-08'  # int(datetime.datetime.now().timestamp()) - 40000
+        return new_exchange_rates
