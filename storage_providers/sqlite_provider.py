@@ -31,6 +31,7 @@ class SqliteProvider(storage_provider.StorageProvider):
     ) -> List[entities.ExchangeRate]:
         latest_exchange_rates = []
         with self._conn:
+            # This is not the most robust solution, but meets the requirements.
             newest_date_per_currency = self._conn.execute(
                 """
                 SELECT currency, base_currency, MAX(date) AS date
