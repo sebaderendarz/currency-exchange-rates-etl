@@ -1,13 +1,33 @@
 [tool.poetry]
-name = "etl-for-currency-exchange-rates"
+name = "currency-exchange-rates-etl"
 version = "0.1.0"
 description = "Fetch currency exchange rates from specific sources and save in data warehouse"
-authors = ["Sebastian Derendarz <sebastian.derendarz@stxnext.pl>"]
+authors = ["Sebastian Derendarz <sebastian.derendarz@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "3.8"
+pandas = "^1.5.2"
+requests = "^2.28.1"
+pydantic = "^1.10.2"
+google-cloud-bigquery = "^3.4.0"
 
 [tool.poetry.dev-dependencies]
+black = "^22.12.0"
+isort = "^5.10.1"
+
+[tool.black]
+line_length = 120
+skip_string_normalization = true
+skip_numeric_underscore_normalization = true
+target_version = ["py36"]
+
+[tool.isort]
+combine_as_imports = true
+force_sort_within_sections = true
+include_trailing_comma = true
+line_length = 120
+multi_line_output = 3
+use_parentheses = true
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
